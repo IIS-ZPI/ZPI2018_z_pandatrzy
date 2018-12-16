@@ -17,8 +17,8 @@ import java.util.stream.Collectors;
 public class NbpApiImp implements NbpApi {
 
     private static final String NBP_API = "http://api.nbp.pl/api/exchangerates/rates/a/{currency}/{dateStart}/{dateEnd}";
-    private DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    private Pattern CURRENCY_PATTERN = Pattern.compile("^[A-Z]{3}$");
+    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private static final Pattern CURRENCY_PATTERN = Pattern.compile("^[A-Z]{3}$");
 
     public NbpResponse getExchangeRate(String currency, PeriodType periodType) {
         validateCurrency(currency);
