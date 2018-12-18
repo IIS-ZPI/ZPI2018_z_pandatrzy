@@ -1,38 +1,38 @@
 package pl.panda.trzy.analysis;
 
 public class SessionsCount {
-    private Integer rise;
 
-    public SessionsCount(Integer rise, Integer fall, Integer noChange) {
+    private int rise;
+    private int fall;
+    private int noChange;
+
+    public SessionsCount(int rise, int fall, int noChange) {
         this.rise = rise;
         this.fall = fall;
         this.noChange = noChange;
     }
 
-    private Integer fall;
-    private Integer noChange;
-
-    public Integer getRise() {
+    public int getRise() {
         return rise;
     }
 
-    public void setRise(Integer rise) {
+    public void setRise(int rise) {
         this.rise = rise;
     }
 
-    public Integer getFall() {
+    public int getFall() {
         return fall;
     }
 
-    public void setFall(Integer fall) {
+    public void setFall(int fall) {
         this.fall = fall;
     }
 
-    public Integer getNoChange() {
+    public int getNoChange() {
         return noChange;
     }
 
-    public void setNoChange(Integer noChange) {
+    public void setNoChange(int noChange) {
         this.noChange = noChange;
     }
 }

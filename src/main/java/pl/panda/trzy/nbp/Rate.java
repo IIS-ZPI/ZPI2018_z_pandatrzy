@@ -1,6 +1,7 @@
 package pl.panda.trzy.nbp;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 public class Rate {
     public String getNo() {
@@ -11,14 +12,6 @@ public class Rate {
         this.no = no;
     }
 
-    public String getEffectiveDate() {
-        return effectiveDate;
-    }
-
-    public void setEffectiveDate(String effectiveDate) {
-        this.effectiveDate = effectiveDate;
-    }
-
     public BigDecimal    getMid() {
         return mid;
     }
@@ -27,7 +20,15 @@ public class Rate {
         this.mid = mid;
     }
 
+    public Date getEffectiveDate() {
+        return effectiveDate;
+    }
+
+    public void setEffectiveDate(Date effectiveDate) {
+        this.effectiveDate = effectiveDate;
+    }
+
     private String no;
-    private String effectiveDate;
+    private Date effectiveDate;
     private BigDecimal mid;
 }
