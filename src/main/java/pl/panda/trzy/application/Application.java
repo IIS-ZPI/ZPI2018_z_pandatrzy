@@ -7,6 +7,7 @@ import pl.panda.trzy.nbp.NbpApi;
 import pl.panda.trzy.nbp.NbpApiImp;
 import pl.panda.trzy.nbp.NbpResponse;
 import pl.panda.trzy.nbp.PeriodType;
+import pl.panda.trzy.util.CSVWriter;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -42,6 +43,13 @@ public class Application {
         AnalysisApi analysisApi = new AnalysisApiImpl();
         NbpResponse response = nbpApi.getExchangeRate(currency, PeriodType.YEAR);
         Map<PeriodType, SessionsCount> sessionsCount = analysisApi.mapSessions(new LinkedList<>(response.getRates()));
+        try {
+            CSVWriter.writeSessionAnalysisToCSV(sessionsCount);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Wystąpił błąd w trakcie zapisu wyników.");
+        }
+        System.out.println("Wyniki zapisane do pliku");
 
         //todo sessionsCount -> to CSV file
 

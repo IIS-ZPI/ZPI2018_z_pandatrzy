@@ -1,5 +1,10 @@
 package pl.panda.trzy.analysis;
 
+import org.springframework.util.StringUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class SessionsCount {
 
     private int rise;
@@ -34,5 +39,21 @@ public class SessionsCount {
 
     public void setNoChange(int noChange) {
         this.noChange = noChange;
+    }
+
+    public List<String> getValuesList(){
+        List<String> list = new ArrayList<>();
+        list.add(String.valueOf(this.rise));
+        list.add(String.valueOf(this.fall));
+        list.add(String.valueOf(this.noChange));
+        return list;
+    }
+
+    public List<String> getHeaders(){
+        List<String> list = new ArrayList<>();
+        list.add("RISE");
+        list.add("FALL");
+        list.add("NO_CHANGE");
+        return list;
     }
 }
