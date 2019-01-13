@@ -15,3 +15,7 @@
 mvn clean package
 ```
   - to RUN the jar, go into target and use "java -jar laboratorium[version].jar" (this jar contains all dependencies and can be run from the command line)
+
+```bash
+ava -jar laboratorium-1.0.0-SNAPSHOT.jar
+```
