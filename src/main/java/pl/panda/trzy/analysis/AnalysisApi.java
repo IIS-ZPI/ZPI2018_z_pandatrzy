@@ -22,7 +22,7 @@ public interface AnalysisApi {
      * @param rateList
      * @return
      */
-    Map<PeriodType, SessionsCount> mapSessions(LinkedList<Rate> rateList);
+    Map<PeriodType, SessionsCount> performSessionAnalysis(LinkedList<Rate> rateList);
 
     /**
      * Odfiltrowuje kursy walut dla podanego okresu z listy podanej jako parametr wejściowy. Przykładowo z listy kursów
@@ -33,4 +33,11 @@ public interface AnalysisApi {
      * @return
      */
     LinkedList<Rate> filterRatesForPeriod(LinkedList<Rate> rateList, LocalDateTime date, PeriodType periodType);
+
+    /**
+     * Oblicza wszystie miary statystyczne dla podanej listy kursów waluty za wszystkie okresy
+     * @param rates
+     * @return
+     */
+    Map<PeriodType, StatAnalysis> performStatAnalysis(LinkedList<Rate> rates);
 }

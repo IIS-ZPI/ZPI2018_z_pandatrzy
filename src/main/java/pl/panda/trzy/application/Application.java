@@ -3,6 +3,7 @@ package pl.panda.trzy.application;
 import pl.panda.trzy.analysis.AnalysisApi;
 import pl.panda.trzy.analysis.AnalysisApiImpl;
 import pl.panda.trzy.analysis.SessionsCount;
+import pl.panda.trzy.analysis.StatAnalysis;
 import pl.panda.trzy.nbp.NbpApi;
 import pl.panda.trzy.nbp.NbpApiImp;
 import pl.panda.trzy.nbp.NbpResponse;
@@ -27,6 +28,10 @@ public class Application {
                 performSessionsAnalysis(currency);
                 break;
             }
+            case STATISTICAL_MEASURES:
+                String currency = getCurrency();
+                performStatAnalysis(currency);
+                break;
             case EXIT: {
                 System.out.println("Wychodzę...");
                 break;
@@ -38,11 +43,20 @@ public class Application {
 
     }
 
+    private static void performStatAnalysis(String currency) {
+        NbpApi nbpApi = new NbpApiImp();
+        AnalysisApi analysisApi = new AnalysisApiImpl();
+        NbpResponse response = nbpApi.getExchangeRate(currency, PeriodType.YEAR);
+        Map<PeriodType, StatAnalysis> analysis = analysisApi.performStatAnalysis(new LinkedList<>(response.getRates()));
+        //todo zapis do pliku
+
+    }
+
     private static void performSessionsAnalysis(String currency) {
         NbpApi nbpApi = new NbpApiImp();
         AnalysisApi analysisApi = new AnalysisApiImpl();
         NbpResponse response = nbpApi.getExchangeRate(currency, PeriodType.YEAR);
-        Map<PeriodType, SessionsCount> sessionsCount = analysisApi.mapSessions(new LinkedList<>(response.getRates()));
+        Map<PeriodType, SessionsCount> sessionsCount = analysisApi.performSessionAnalysis(new LinkedList<>(response.getRates()));
         try {
             CSVWriter.writeSessionAnalysisToCSV(sessionsCount);
         } catch (IOException e) {
@@ -50,15 +64,12 @@ public class Application {
             System.out.println("Wystąpił błąd w trakcie zapisu wyników.");
         }
         System.out.println("Wyniki zapisane do pliku");
-
-        //todo sessionsCount -> to CSV file
-
     }
 
     private static String getCurrency() throws IOException {
         System.out.println("Podaj walutę:");
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        return  reader.readLine().toUpperCase();
+        return reader.readLine().toUpperCase();
     }
 
     private static AnalysisType determineAnalysisType(AnalysisType type) throws IOException {
