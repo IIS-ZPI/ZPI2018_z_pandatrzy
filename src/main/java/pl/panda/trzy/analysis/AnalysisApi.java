@@ -1,5 +1,6 @@
 package pl.panda.trzy.analysis;
 
+import pl.panda.trzy.nbp.NbpResponse;
 import pl.panda.trzy.nbp.PeriodType;
 import pl.panda.trzy.nbp.Rate;
 
@@ -40,4 +41,12 @@ public interface AnalysisApi {
      * @return
      */
     Map<PeriodType, StatAnalysis> performStatAnalysis(LinkedList<Rate> rates);
+
+    /**
+     * Zwraca mapę rozkładu częstości zmian tygodniowych dla wybranych 2 walut. Każdy element na mapie to wpółczynnik
+     * z kolejnego tygodnia
+     * @param responseMap
+     * @return
+     */
+    Map<Integer, Double> performDistributionAnalysis(Map<String, NbpResponse> responseMap);
 }

@@ -58,7 +58,7 @@ public class Application {
         AnalysisApi analysisApi = new AnalysisApiImpl();
         Set<String> currencies = Stream.of(currency1, currency2).collect(Collectors.toSet());
         Map<String, NbpResponse> responseMap = nbpApi.getExchangeRates(currencies, PeriodType.YEAR);
-        //analysisApi.performDistributionAnalysis(responseMap); //todo - nie wiem jak się to liczy...
+        Map<Integer, Double> result = analysisApi.performDistributionAnalysis(responseMap);
         //todo zapis do pliku
     }
 
