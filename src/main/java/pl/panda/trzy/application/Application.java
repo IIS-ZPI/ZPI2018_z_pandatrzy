@@ -15,6 +15,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Application {
     public static void main(String[] args) throws IOException {
@@ -28,10 +31,17 @@ public class Application {
                 performSessionsAnalysis(currency);
                 break;
             }
-            case STATISTICAL_MEASURES:
+            case STATISTICAL_MEASURES: {
                 String currency = getCurrency();
                 performStatAnalysis(currency);
                 break;
+            }
+            case DISTRIBUTION: {
+                String currency1 = getCurrency();
+                String currency2 = getCurrency();
+                performDistributionAnalysis(currency1, currency2);
+                break;
+            }
             case EXIT: {
                 System.out.println("Wychodzę...");
                 break;
@@ -41,6 +51,15 @@ public class Application {
             }
         }
 
+    }
+
+    private static void performDistributionAnalysis(String currency1, String currency2) {
+        NbpApi nbpApi = new NbpApiImp();
+        AnalysisApi analysisApi = new AnalysisApiImpl();
+        Set<String> currencies = Stream.of(currency1, currency2).collect(Collectors.toSet());
+        Map<String, NbpResponse> responseMap = nbpApi.getExchangeRates(currencies, PeriodType.YEAR);
+        //analysisApi.performDistributionAnalysis(responseMap); //todo - nie wiem jak się to liczy...
+        //todo zapis do pliku
     }
 
     private static void performStatAnalysis(String currency) {
