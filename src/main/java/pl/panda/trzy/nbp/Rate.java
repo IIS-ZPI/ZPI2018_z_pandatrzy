@@ -14,6 +14,9 @@ public class Rate {
         this.mid = mid;
     }
 
+    public Rate() {
+    }
+
     public String getNo() {
         return no;
     }
