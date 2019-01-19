@@ -1,9 +1,6 @@
 package pl.panda.trzy.application;
 
-import pl.panda.trzy.analysis.AnalysisApi;
-import pl.panda.trzy.analysis.AnalysisApiImpl;
-import pl.panda.trzy.analysis.SessionsCount;
-import pl.panda.trzy.analysis.StatAnalysis;
+import pl.panda.trzy.analysis.*;
 import pl.panda.trzy.nbp.NbpApi;
 import pl.panda.trzy.nbp.NbpApiImp;
 import pl.panda.trzy.nbp.NbpResponse;
@@ -59,7 +56,14 @@ public class Application {
         Set<String> currencies = Stream.of(currency1, currency2).collect(Collectors.toSet());
         Map<String, NbpResponse> responseMap = nbpApi.getExchangeRates(currencies, PeriodType.YEAR);
         Map<Integer, Double> result = analysisApi.performDistributionAnalysis(responseMap);
-        //todo zapis do pliku
+
+        try {
+            CSVWriter.writeDistributionAnalysisToCSV(result);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Wystąpił błąd w trakcie zapisu wyników.");
+        }
+        System.out.println("Wyniki zapisane do pliku");
     }
 
     private static void performStatAnalysis(String currency) {
@@ -67,8 +71,14 @@ public class Application {
         AnalysisApi analysisApi = new AnalysisApiImpl();
         NbpResponse response = nbpApi.getExchangeRate(currency, PeriodType.YEAR);
         Map<PeriodType, StatAnalysis> analysis = analysisApi.performStatAnalysis(new LinkedList<>(response.getRates()));
-        //todo zapis do pliku
 
+        try {
+            CSVWriter.writeStatAnalysisToCSV(analysis);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Wystąpił błąd w trakcie zapisu wyników.");
+        }
+        System.out.println("Wyniki zapisane do pliku");
     }
 
     private static void performSessionsAnalysis(String currency) {

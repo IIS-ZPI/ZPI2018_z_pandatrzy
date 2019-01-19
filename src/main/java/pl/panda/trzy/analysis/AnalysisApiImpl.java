@@ -77,9 +77,9 @@ public class AnalysisApiImpl implements AnalysisApi {
 
     @Override
     public Map<Integer, Double> performDistributionAnalysis(Map<String, NbpResponse> responseMap) {
-        Map<Integer, Double> result = new HashMap<>();
+        Map<Integer, Double> result = new LinkedHashMap<>();
         if (responseMap.size() != 2) {
-            throw new IllegalArgumentException("Expected two ccurrencies");
+            throw new IllegalArgumentException("Expected two currencies");
         }
         List<Double> rates = new ArrayList<>();
         int j = 0;
