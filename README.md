@@ -7,6 +7,8 @@
 ### Backlog
   - https://github.com/IIS-ZPI/ZPI2018_z_pandatrzy/projects/1
 
+### Travis
+  - https://travis-ci.org/IIS-ZPI/ZPI2018_z_pandatrzy
 
 ### Building and running
   - to BUILD project use maven, command:
