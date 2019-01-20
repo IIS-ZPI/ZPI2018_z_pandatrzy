@@ -1,5 +1,6 @@
 package pl.panda.trzy.analysis;
 
+import pl.panda.trzy.nbp.NbpResponse;
 import pl.panda.trzy.nbp.PeriodType;
 import pl.panda.trzy.nbp.Rate;
 
@@ -22,7 +23,7 @@ public interface AnalysisApi {
      * @param rateList
      * @return
      */
-    Map<PeriodType, SessionsCount> mapSessions(LinkedList<Rate> rateList);
+    Map<PeriodType, SessionsCount> performSessionAnalysis(LinkedList<Rate> rateList);
 
     /**
      * Odfiltrowuje kursy walut dla podanego okresu z listy podanej jako parametr wejściowy. Przykładowo z listy kursów
@@ -33,4 +34,19 @@ public interface AnalysisApi {
      * @return
      */
     LinkedList<Rate> filterRatesForPeriod(LinkedList<Rate> rateList, LocalDateTime date, PeriodType periodType);
+
+    /**
+     * Oblicza wszystie miary statystyczne dla podanej listy kursów waluty za wszystkie okresy
+     * @param rates
+     * @return
+     */
+    Map<PeriodType, StatAnalysis> performStatAnalysis(LinkedList<Rate> rates);
+
+    /**
+     * Zwraca mapę rozkładu częstości zmian tygodniowych dla wybranych 2 walut. Każdy element na mapie to wpółczynnik
+     * z kolejnego tygodnia
+     * @param responseMap
+     * @return
+     */
+    Map<Integer, Double> performDistributionAnalysis(Map<String, NbpResponse> responseMap);
 }

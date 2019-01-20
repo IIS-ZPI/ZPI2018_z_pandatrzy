@@ -4,6 +4,19 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class Rate {
+
+    public Rate(BigDecimal mid) {
+        this.mid = mid;
+    }
+
+    public Rate(Date effectiveDate, BigDecimal mid) {
+        this.effectiveDate = effectiveDate;
+        this.mid = mid;
+    }
+
+    public Rate() {
+    }
+
     public String getNo() {
         return no;
     }
