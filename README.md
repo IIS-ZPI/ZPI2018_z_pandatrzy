@@ -1,5 +1,5 @@
 # ZPI2018_z_pandatrzy
-### Envirnoment 
+### Environment 
   - Java
   - Travis
   - JUnit
