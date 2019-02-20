@@ -50,7 +50,7 @@ public class Application {
 
     }
 
-    private static void performDistributionAnalysis(String currency1, String currency2) {
+    public static void performDistributionAnalysis(String currency1, String currency2) {
         NbpApi nbpApi = new NbpApiImp();
         AnalysisApi analysisApi = new AnalysisApiImpl();
         Set<String> currencies = Stream.of(currency1, currency2).collect(Collectors.toSet());
@@ -66,7 +66,7 @@ public class Application {
         System.out.println("Wyniki zapisane do pliku");
     }
 
-    private static void performStatAnalysis(String currency) {
+    public static void performStatAnalysis(String currency) {
         NbpApi nbpApi = new NbpApiImp();
         AnalysisApi analysisApi = new AnalysisApiImpl();
         NbpResponse response = nbpApi.getExchangeRate(currency, PeriodType.YEAR);
@@ -81,7 +81,7 @@ public class Application {
         System.out.println("Wyniki zapisane do pliku");
     }
 
-    private static void performSessionsAnalysis(String currency) {
+    public static void performSessionsAnalysis(String currency) {
         NbpApi nbpApi = new NbpApiImp();
         AnalysisApi analysisApi = new AnalysisApiImpl();
         NbpResponse response = nbpApi.getExchangeRate(currency, PeriodType.YEAR);

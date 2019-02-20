@@ -1,46 +1,61 @@
 package pl.panda.trzy.application;
 
-import java.io.IOException;
-import java.util.LinkedList;
-import java.util.Map;
-
-import pl.panda.trzy.analysis.AnalysisApi;
-import pl.panda.trzy.analysis.AnalysisApiImpl;
-import pl.panda.trzy.analysis.StatAnalysis;
-import pl.panda.trzy.nbp.NbpApi;
-import pl.panda.trzy.nbp.NbpApiImp;
-import pl.panda.trzy.nbp.NbpResponse;
-import pl.panda.trzy.nbp.PeriodType;
-import pl.panda.trzy.util.CSVWriter;
-
 public class PerformanceTest {
+    private static int NUMBER_OF_TESTS = 1000;
 
 	public static void main(String[] args) {
+        String statAnalysisSummary = testStatAnalysis();
+        String distributionAnalysisSummary = testDistributionAnalysis();
+        String sessionsAnalysisSummary = testSessionsAnalysis();
+
+        System.out.println(statAnalysisSummary);
+        System.out.println(distributionAnalysisSummary);
+        System.out.println(sessionsAnalysisSummary);
+	}
+
+    private static String testStatAnalysis() {
 		String testCurrency = "EUR";
 		long start = System.currentTimeMillis();
 
-		for(int i = 0; i < 1000; i++) {
-			performStatAnalysis(testCurrency);
+		for(int i = 0; i < NUMBER_OF_TESTS; i++) {
+			Application.performStatAnalysis(testCurrency);
 		}
 
 		long stop = System.currentTimeMillis();
 		long elapsed = stop - start;
 
-		System.out.printf("Performance test: 1000 executions of static analysis took %dms.%n", elapsed);
-	}
+		String summary = String.format("Performance test: %d executions of static analysis took %dms.%n", NUMBER_OF_TESTS, elapsed);
+		return summary;
+    }
 
-    private static void performStatAnalysis(String currency) {
-        NbpApi nbpApi = new NbpApiImp();
-        AnalysisApi analysisApi = new AnalysisApiImpl();
-        NbpResponse response = nbpApi.getExchangeRate(currency, PeriodType.YEAR);
-        Map<PeriodType, StatAnalysis> analysis = analysisApi.performStatAnalysis(new LinkedList<>(response.getRates()));
+    private static String testDistributionAnalysis() {
+		String testCurrency1 = "EUR";
+        String testCurrency2 = "USD";
+		long start = System.currentTimeMillis();
 
-        try {
-            CSVWriter.writeStatAnalysisToCSV(analysis);
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Wystąpił błąd w trakcie zapisu wyników.");
-        }
-        System.out.println("Wyniki zapisane do pliku");
+		for(int i = 0; i < NUMBER_OF_TESTS; i++) {
+			Application.performDistributionAnalysis(testCurrency1, testCurrency2);
+		}
+
+		long stop = System.currentTimeMillis();
+		long elapsed = stop - start;
+
+		String summary = String.format("Performance test: %d executions of distribution analysis took %dms.%n", NUMBER_OF_TESTS, elapsed);
+		return summary;
+    }
+
+    private static String testSessionsAnalysis() {
+		String testCurrency = "EUR";
+		long start = System.currentTimeMillis();
+
+		for(int i = 0; i < NUMBER_OF_TESTS; i++) {
+			Application.performSessionsAnalysis(testCurrency);
+		}
+
+		long stop = System.currentTimeMillis();
+		long elapsed = stop - start;
+
+		String summary = String.format("Performance test: %d executions of sessions analysis took %dms.%n", NUMBER_OF_TESTS, elapsed);
+		return summary;
     }
 }
