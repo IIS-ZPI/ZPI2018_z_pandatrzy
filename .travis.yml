@@ -6,6 +6,6 @@ script: mvn clean package
 deploy:
   provider: releases
   api_key: $git_toks
-  file: "laboratorium-1.0.0-SNAPSHOT.jar"
+  file: "/home/travis/build/IIS-ZPI/ZPI2018_z_pandatrzy/target/laboratorium-1.0.0-SNAPSHOT.jar"
   skip_cleanup: true
   draft: true
